@@ -31,8 +31,6 @@ public class LerXML {
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(LerXML.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
         try {
             //Importação
             Document doc = builder.parse(".\\note.xml");

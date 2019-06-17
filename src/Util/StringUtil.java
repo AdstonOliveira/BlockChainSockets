@@ -44,15 +44,15 @@ public class StringUtil {
             return (df.format (dt));
         }
         
-        public static String applyMD5(File input) throws FileNotFoundException, IOException{		
+    public static String applyMD5(File input) throws FileNotFoundException, IOException{		
 		
-            MessageDigest digest = null;	        
+        MessageDigest digest = null;	        
             try {
                 digest = MessageDigest.getInstance("MD5");
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(StringUtil.class.getName()).log(Level.SEVERE, null, ex);
             }
-			//Applies sha256 to our input, 
+//Applies sha256 to our input, 
             InputStream is = new FileInputStream(input);
                  byte[] buffer = new byte[8192];
                     int read = 0;
@@ -76,7 +76,7 @@ public class StringUtil {
                 }
             }
 
-            return output;
+        return output;
         }
 
         

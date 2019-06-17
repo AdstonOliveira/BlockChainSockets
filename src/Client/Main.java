@@ -2,8 +2,10 @@ package Client;
 
 import Util.SelectXML;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,14 +15,13 @@ import javax.swing.JOptionPane;
 public class Main extends javax.swing.JFrame {
 
     private File result;
+    private final Control_Main control;
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-               
-        this.btSelect.setPreferredSize(new Dimension(100, 75));
-        this.btCancel.setVisible(false);
+        this.control = new Control_Main(this);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,6 +36,10 @@ public class Main extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btConect = new javax.swing.JButton();
+        labelServidor = new javax.swing.JTextField();
+        labelPorta = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         Painel_selectFile = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btSelect = new javax.swing.JButton();
@@ -57,6 +62,19 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setText("Conectar a Blockchain");
 
         btConect.setText("Conectar");
+        btConect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConectActionPerformed(evt);
+            }
+        });
+
+        labelServidor.setText("localhost");
+
+        labelPorta.setText("666");
+
+        jLabel4.setText("Endereço:");
+
+        jLabel5.setText("Porta");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -64,10 +82,19 @@ public class Main extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(labelPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(btConect, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,7 +102,16 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btConect, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelServidor)
+                            .addComponent(labelPorta))))
                 .addContainerGap())
         );
 
@@ -86,6 +122,7 @@ public class Main extends javax.swing.JFrame {
         jLabel2.setText("Selecionar Arquivo");
 
         btSelect.setText("Selecionar");
+        btSelect.setEnabled(false);
         btSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSelectActionPerformed(evt);
@@ -112,6 +149,12 @@ public class Main extends javax.swing.JFrame {
         );
 
         btCancel.setText("Cancelar");
+        btCancel.setEnabled(false);
+        btCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Painel_selectFileLayout = new javax.swing.GroupLayout(Painel_selectFile);
         Painel_selectFile.setLayout(Painel_selectFileLayout);
@@ -154,6 +197,11 @@ public class Main extends javax.swing.JFrame {
         btSend.setText("Enviar");
         btSend.setDefaultCapable(false);
         btSend.setEnabled(false);
+        btSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -219,21 +267,74 @@ public class Main extends javax.swing.JFrame {
             this.result = SelectXML.selected();
 
             if( this.result != null ){
-                if( !this.btSend.isEnabled() ){
-                    this.btSend.setEnabled(true);
-                    this.file_selected.setText("Arquivo definido: " + this.result.getName());
-                    this.fundoTexto.setBackground(Color.blue);
-                    //this.teste.setVisible(true);
-                }
+                this.switch_button_send();
             }else{
-                this.btSend.setEnabled(false);
-                this.file_selected.setText("Arquivo não selecionado");
-                this.fundoTexto.setBackground(Color.red);
+                this.switch_button_send();
 
             }
         }
     }//GEN-LAST:event_btSelectActionPerformed
 
+    private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
+        //this.result = null;
+        //this.switch_button_send();
+        
+        this.control.sendFile(result);
+        
+    }//GEN-LAST:event_btCancelActionPerformed
+
+    private void btConectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConectActionPerformed
+        try {
+            if( !this.control.conected() ){
+                if(this.control.conectar( this.labelServidor.getText(), this.labelPorta.getText() ) ){
+                    this.btSelect.setEnabled(true);
+                    this.btConect.setBackground(Color.green);
+                    this.btConect.setText("Desconectar ...");
+                }else{
+                    this.btConect.setBackground(Color.red);
+                    this.btConect.setText("Tente novamente ...");
+                    JOptionPane.showMessageDialog(this, "Erro ao conectar!!!");
+                }
+            }else{
+                this.control.desconectar();
+                    this.btSelect.setEnabled(false);
+                    this.btConect.setBackground(new Color(200,200,200));
+                    this.btConect.setText("Conectar");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btConectActionPerformed
+
+    private void btSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSendActionPerformed
+        try {
+            this.control.sendServer(result);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btSendActionPerformed
+    
+    
+    
+    public void switch_button_send(){
+        if( this.result != null ){
+            if( !this.btSend.isEnabled() ){
+                this.btSend.setEnabled(true);
+                this.btCancel.setEnabled(true);
+                    
+                this.file_selected.setText("Arquivo definido: " + this.result.getName());
+                this.fundoTexto.setBackground(Color.blue);
+                    //this.teste.setVisible(true);
+            }
+            }else{
+                this.btSend.setEnabled(false);
+                this.btCancel.setEnabled(false);
+                this.file_selected.setText("Arquivo não selecionado");
+                this.fundoTexto.setBackground(Color.red);
+            }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -280,8 +381,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JTextField labelPorta;
+    private javax.swing.JTextField labelServidor;
     // End of variables declaration//GEN-END:variables
 }
