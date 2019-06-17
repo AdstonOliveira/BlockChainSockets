@@ -1,8 +1,8 @@
 package Blockchain;
 
+import Client.Transaction;
 import Util.StringUtil;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +16,7 @@ public class Block implements Serializable{
     
     private long timeStamp; //data atual 
     public String hash = "incomplent block"; // Hash do atual
-    private ArrayList<File> dados = new ArrayList(); //Dado a ser adicionado ao bloco
+    private ArrayList<Transaction> dados = new ArrayList(); //Dado a ser adicionado ao bloco
     private int nonce = 0;
     private final int amount_transactions = 5;
     private final Blockchain blockchain;
@@ -49,10 +49,10 @@ public class Block implements Serializable{
         return this.dados.size() >= this.amount_transactions;
     }
     
-    public boolean add_transation( File file ){
+    public boolean add_transation( Transaction transaction ){
         if( !this.isFull() ){
             System.out.println("Não esta cheio");
-            this.dados.add(file);
+            this.dados.add(transaction);
             JOptionPane.showMessageDialog(null,"Agora Este bloco tem: " + this.dados.size() + " transacoes" );
             return true;    
         }else{
@@ -113,8 +113,8 @@ public class Block implements Serializable{
     
     public static String transactionList(Block block){
         String nomes = "";
-        for(File each : block.dados){
-            nomes += each.getName() + "\n";
+        for(Transaction each : block.dados){
+            nomes += each.getRemetente() + "\n";
         }
         return nomes;
     }

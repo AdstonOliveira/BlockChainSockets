@@ -5,6 +5,7 @@
  */
 package Util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,55 +22,88 @@ import org.xml.sax.SAXException;
  */
 
 public class LerXML {
-    public static void main(String[] args) {
-        DocumentBuilder builder = null;
+    public static void main(String[] args) throws IOException {
+        File f = new File(".\\XMLBoletim.xml");
+        lerArquivo(f);
+        
+    }
+    public static void lerArquivo(File file) throws IOException{
     //Inicialização
         try {
+            
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            builder = factory.newDocumentBuilder();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(file);
+            doc.getDocumentElement().normalize();
             
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(LerXML.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
             //Importação
-            Document doc = builder.parse(".\\note.xml");
+            NodeList lista = doc.getElementsByTagName("boletim");
             
-            NodeList lista = doc.getElementsByTagName("note");
-            Node no = lista.item(0);
+            for(int j = 0; j < lista.getLength(); j++){
+                Node no = lista.item(j);
             
-            if(no.getNodeType() == Node.ELEMENT_NODE){
-                Element conv = (Element) no;
-                NodeList elementosConv = conv.getChildNodes();
+                if(no.getNodeType() == Node.ELEMENT_NODE){
+                    Element conv = (Element) no;
+                    NodeList elementosConv = conv.getChildNodes();
                 
-                for(int i = 0; i < elementosConv.getLength(); i++){
-                    Node filho = elementosConv.item(i);
+                        for(int i = 0; i < elementosConv.getLength(); i++){
+                            Node filho = elementosConv.item(i);
                 
-                    if(filho.getNodeType() == Node.ELEMENT_NODE){
-                        Element c = (Element) filho;
-                        //Leitura do arquivo
-                            switch( c.getTagName() ){
-                                case "to":
-                                    System.out.println("to " + c.getTextContent());
+                            if(filho.getNodeType() == Node.ELEMENT_NODE){
+                                Element c = (Element) filho;
+                        //Leitura do arquivo ++ ainda nao ta funcionando corretamente
+                                switch( c.getTagName() ){
+                                    case "dados_eleicao":
+                                        System.out.println("dados_eleicao: "+ c.getTextContent() );
                                     break;
-                                case "from":
-                                    System.out.println("from " + c.getTextContent());
-                                    break;
-                        
+                                }
                             }
-                    }
-                    
-                }    
-                
+                        }    
+                }
             }
-            
-        } catch (SAXException ex) {
-            Logger.getLogger(LerXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SAXException | ParserConfigurationException ex) {
             Logger.getLogger(LerXML.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-    
     }
 }
+/*
+public void XML(){
+
+ try {
+ 
+	File fXmlFile = new File("producao.xml");
+	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+	Document doc = dBuilder.parse(fXmlFile);
+ 
+	//optional, but recommended
+	//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+	doc.getDocumentElement().normalize();
+ 
+	System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+ 
+	NodeList nList = doc.getElementsByTagName("staff");
+ 
+	System.out.println("----------------------------");
+ 
+	for (int temp = 0; temp < nList.getLength(); temp++) {
+ 
+		Node nNode = nList.item(temp);
+ 
+		System.out.println("\nCurrent Element :" + nNode.getNodeName());
+ 
+		if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+ 
+			Element eElement = (Element) nNode;
+ 
+			System.out.println("Staff id : " + eElement.getAttribute("guest"));
+			System.out.println("First Name : " + eElement.getElementsByTagName("fname").item(0).getTextContent());
+			
+ 
+		}
+	}
+    } catch (Exception e) {
+    }
+}
+*/
