@@ -12,6 +12,25 @@ public class DadosSecao {
     private int faltosos;
     private int habilitados;
 
+    @Override
+    public String toString() {
+        return "Dados da Secao{" + "\nzona = " + zona + ", municipio = " + municipio + ", secao = " + secao 
+                + "\naptos_votar = " + aptos_votar + ", comparecimentos = " + comparecimentos 
+                + "\nfaltosos = " + faltosos + ", habilitados = " + habilitados + "\n}";
+    }
+
+    public int getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(int municipio) {
+        this.municipio = municipio;
+    }
+    
+
+    
+    
+    
     public int getZona() {
         return zona;
     }

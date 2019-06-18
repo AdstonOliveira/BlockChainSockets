@@ -5,10 +5,7 @@
  */
 package Util;
 
-import Client.options.BoletimUrna;
-import Client.options.Candidato;
-import Client.options.Partido;
-import Client.options.Resultado;
+import Client.options.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -41,10 +38,11 @@ public class DadosXML {
         File f = new File(".\\XMLBoletim.xml");
         DadosXML xml = new DadosXML(f);
 
+        System.out.println(xml.boletim.getDados().getDados_secao().toString());
         for(Partido each : xml.boletim.getDados().getResultados().get(0).getPartidos()){
             each.printPartido();
         }
-    
+        
     }
     
     public BoletimUrna lerArquivo(File file) throws IOException{
@@ -309,7 +307,7 @@ public class DadosXML {
                                     enc_calendar.set(Calendar.SECOND, Integer.valueOf(hora_e[2]) );
 
                                 boletim.getDados().getDados_urna().setDt_fechamento(enc_calendar.getTime());
-                            break;
+                            break;/*
                             case "comparecimento":
                                 int comp = Integer.valueOf(atributo.getTextContent());
                                 boletim.getDados().getDados_secao().setLocal(comp);
@@ -321,7 +319,7 @@ public class DadosXML {
                             case "habilitados":
                                 int habil = Integer.valueOf(atributo.getTextContent());
                                 boletim.getDados().getDados_secao().setLocal(habil);
-                            break;
+                            break;*/
                             default:
                                 System.out.println("Tag invalida, não adicionada ao tipo: " + atributo.getTagName());
                             break;
@@ -331,9 +329,9 @@ public class DadosXML {
     }
     
     
-    public void dados_secao(Element c, BoletimUrna boletim){
+   public void dados_secao(Element c, BoletimUrna boletim){
         NodeList elementos = c.getChildNodes();
-        boletim.getDados().getDados_secao().setLocal(Integer.valueOf(c.getAttribute("id_municipio")));
+        boletim.getDados().getDados_secao().setMunicipio(Integer.valueOf(c.getAttribute("id_municipio")));
         
             for (int i = 0; i < elementos.getLength(); i++) {
                 Node filho = elementos.item(i);
@@ -352,23 +350,23 @@ public class DadosXML {
                             break;
                             case "secao":
                                 int secao = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(secao);
+                                boletim.getDados().getDados_secao().setSecao(secao);
                             break;
                             case "aptos":
                                 int aptos = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(aptos);
+                                boletim.getDados().getDados_secao().setAptos_votar(aptos);
                             break;
                             case "comparecimento":
                                 int comp = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(comp);
+                                boletim.getDados().getDados_secao().setComparecimentos(comp);
                             break;
                             case "faltosos":
                                 int faltosos = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(faltosos);
+                                boletim.getDados().getDados_secao().setFaltosos(faltosos);
                             break;
                             case "habilitados":
                                 int habil = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(habil);
+                                boletim.getDados().getDados_secao().setHabilitados(habil);
                             break;
                             default:
                                 System.out.println("Tag invalida, não adicionada ao tipo: " + atributo.getTagName());

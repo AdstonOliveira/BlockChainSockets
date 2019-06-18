@@ -32,12 +32,12 @@ public class LerXML {
     public LerXML(File file) throws IOException{
         this.boletim = this.lerArquivo(file);
     }
-    
+    /*
     public static void main(String[] args) throws IOException {
         File f = new File(".\\XMLBoletim.xml");
         LerXML xml = new LerXML(f);
-        
-    }
+    };*/
+    
     public BoletimUrna lerArquivo(File file) throws IOException{
     //Inicialização
     BoletimUrna boletim = new BoletimUrna();
@@ -186,18 +186,6 @@ public class LerXML {
                                 System.out.println("Teste da data_enc com hora: " + 
                                         boletim.getDados().getDados_urna().getDt_fechamento());
                             break;
-                            case "comparecimento":
-                                int comp = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(comp);
-                            break;
-                            case "faltosos":
-                                int faltosos = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(faltosos);
-                            break;
-                            case "habilitados":
-                                int habil = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(habil);
-                            break;
                             default:
                                 System.out.println("Tag invalida, não adicionada ao tipo: " + atributo.getTagName());
                             break;
@@ -209,7 +197,7 @@ public class LerXML {
     
     public void dados_secao(Element c, BoletimUrna boletim){
         NodeList elementos = c.getChildNodes();
-        boletim.getDados().getDados_secao().setLocal(Integer.valueOf(c.getAttribute("id_municipio")));
+        boletim.getDados().getDados_secao().setMunicipio(Integer.valueOf(c.getAttribute("id_municipio")));
         
             for (int i = 0; i < elementos.getLength(); i++) {
                 Node filho = elementos.item(i);
@@ -228,23 +216,23 @@ public class LerXML {
                             break;
                             case "secao":
                                 int secao = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(secao);
+                                boletim.getDados().getDados_secao().setSecao(secao);
                             break;
                             case "aptos":
                                 int aptos = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(aptos);
+                                boletim.getDados().getDados_secao().setAptos_votar(aptos);
                             break;
                             case "comparecimento":
                                 int comp = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(comp);
+                                boletim.getDados().getDados_secao().setComparecimentos(comp);
                             break;
                             case "faltosos":
                                 int faltosos = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(faltosos);
+                                boletim.getDados().getDados_secao().setFaltosos(faltosos);
                             break;
                             case "habilitados":
                                 int habil = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(habil);
+                                boletim.getDados().getDados_secao().setHabilitados(habil);
                             break;
                             default:
                                 System.out.println("Tag invalida, não adicionada ao tipo: " + atributo.getTagName());

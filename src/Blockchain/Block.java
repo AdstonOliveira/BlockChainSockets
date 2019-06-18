@@ -20,6 +20,7 @@ public class Block implements Serializable{
     private int nonce = 0;
     private final int amount_transactions = 5;
     private final Blockchain blockchain;
+    
     private volatile boolean aprovade = false;
     //Blocos seguintes *****
     

@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/adston/Documents/projetos/BlockChainSockets/src/Client/options/BoletimUrna.java</file>
+            <file>file:/C:/Users/adston/Documents/projetos/BlockChainSockets/src/Blockchain/Block.java</file>
+            <file>file:/C:/Users/adston/Documents/projetos/BlockChainSockets/src/Blockchain/Pool.java</file>
+            <file>file:/C:/Users/adston/Documents/projetos/BlockChainSockets/src/Client/options/DadosBoletim.java</file>
+            <file>file:/C:/Users/adston/Documents/projetos/BlockChainSockets/src/Util/DadosXML.java</file>
+            <file>file:/C:/Users/adston/Documents/projetos/BlockChainSockets/src/Client/options/DadosSecao.java</file>
+        </group>
     </open-files>
 </project-private>
