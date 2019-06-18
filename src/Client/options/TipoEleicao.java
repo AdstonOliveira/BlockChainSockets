@@ -6,14 +6,29 @@ public class TipoEleicao {
     
     private int id;
     private String descricao;
-    
+    private int ano;
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
     
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    /**
+     *
+     * @param id
+     */
+    public boolean setId(int id) {
+        if(id > 2000)
+            this.id = id;
+        
+        return id >= 1999;
     }
 
     public String getDescricao() {

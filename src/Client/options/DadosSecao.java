@@ -5,7 +5,7 @@ package Client.options;
 public class DadosSecao {
 
     private int zona;
-    private int local;
+    private int municipio;
     private int secao;
     private int aptos_votar;
     private int comparecimentos;
@@ -21,11 +21,11 @@ public class DadosSecao {
     }
 
     public int getLocal() {
-        return local;
+        return municipio;
     }
 
     public void setLocal(int local) {
-        this.local = local;
+        this.municipio = local;
     }
 
     public int getSecao() {

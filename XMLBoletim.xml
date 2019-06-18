@@ -3,12 +3,11 @@
 <boletim resumo = "319.740">
 	<dados_eleicao>
 		<tipo_eleicao id = "01">
-			<descricao>Municipal</descricao>
+			<descricao>"Municipal"</descricao>
 			<ano>2019</ano>
 		</tipo_eleicao>
 
-		<dados_secao>
-			<num_municipio_apuracao>01392</num_municipio_apuracao>
+		<dados_secao id_municipio="01392">
 			<zona>0001</zona>
 			<local>1139</local>
 			<secao>0004</secao>
@@ -19,7 +18,6 @@
 		</dados_secao>
 
 		<urna id = "01763178">
-			
 			<dt_abertura>07/09/2016</dt_abertura>
 			<hr_abertura>15:24:11</hr_abertura>
 			<dt_fechamento>07/09/2016</dt_fechamento>
@@ -27,7 +25,6 @@
 		</urna>
 
 		<resultados>
-
 			<cargo votacao ="Vereador">
 				<partido numero = "89">
 					<cod_verificador>3.852.989.921</cod_verificador>

@@ -5,6 +5,7 @@
  */
 package Util;
 
+import Client.options.BoletimUrna;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -22,12 +23,15 @@ import org.xml.sax.SAXException;
  */
 
 public class LerXML {
+    private final BoletimUrna boletim = new BoletimUrna();
+    
     public static void main(String[] args) throws IOException {
         File f = new File(".\\XMLBoletim.xml");
-        lerArquivo(f);
+        LerXML xml = new LerXML();
+        xml.lerArquivo(f);
         
     }
-    public static void lerArquivo(File file) throws IOException{
+    public void lerArquivo(File file) throws IOException{
     //Inicialização
         try {
             
@@ -35,28 +39,35 @@ public class LerXML {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(file);
             doc.getDocumentElement().normalize();
+            //Atributo resumo da raiz
+            System.out.println("Root element id:" + doc.getDocumentElement().getAttributeNode("resumo").getNodeValue());
+            //long num_resumo = Integer.valueOf(doc.getDocumentElement().getAttributeNode("resumo").getNodeValue());
+            this.boletim.getDados().setNum_resumo(1);
             
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
             //Importação
             NodeList lista = doc.getElementsByTagName("boletim");
             
             for(int j = 0; j < lista.getLength(); j++){
+                
                 Node no = lista.item(j);
-            
+                
+                
                 if(no.getNodeType() == Node.ELEMENT_NODE){
                     Element conv = (Element) no;
                     NodeList elementosConv = conv.getChildNodes();
-                
-                        for(int i = 0; i < elementosConv.getLength(); i++){
-                            Node filho = elementosConv.item(i);
-                
+
+                    for(int i = 0; i < elementosConv.getLength(); i++){
+                        Node filho = elementosConv.item(i);
+                        
                             if(filho.getNodeType() == Node.ELEMENT_NODE){
                                 Element c = (Element) filho;
                         //Leitura do arquivo ++ ainda nao ta funcionando corretamente
                                 switch( c.getTagName() ){
                                     case "dados_eleicao":
-                                        System.out.println("dados_eleicao: "+ c.getTextContent() );
+                                        dados_eleicao(c);
+                                        //System.out.println("dados_eleicao: "+ c.getTextContent() );
                                     break;
+                                    
                                 }
                             }
                         }    
@@ -65,6 +76,65 @@ public class LerXML {
         } catch (SAXException | ParserConfigurationException ex) {
             Logger.getLogger(LerXML.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void dados_eleicao(Element c){
+        NodeList elementos = c.getChildNodes();
+
+            for(int i = 0; i < elementos.getLength(); i++){
+                Node filho = elementos.item(i);
+                
+                    if(filho.getNodeType() == Node.ELEMENT_NODE){
+                        Element node = (Element) filho;
+                        System.out.println("Tags " + node.getNodeName());
+                        
+                        switch (node.getTagName()){
+                            case "tipo_eleicao":
+                               tipo_eleicao(node);   
+                            break;
+                            case "dados_secao":
+                                
+                            break;
+                            
+                        }
+                        
+                    }
+            }
+    }
+    
+    public void dados_secao(Element c){
+        
+    }
+    
+    
+    
+    
+    public void tipo_eleicao(Element c){
+        NodeList elementos = c.getChildNodes();
+        
+        this.boletim.getDados().getTipo_eleicao().setId(Integer.valueOf(c.getAttribute("id")));
+        
+            for (int i = 0; i < elementos.getLength(); i++) {
+                Node filho = elementos.item(i);
+                
+                if(filho.getNodeType() == Node.ELEMENT_NODE){
+                    Element atributo = (Element) filho;
+                    
+                        switch (atributo.getTagName()){
+                            case "descricao":
+                                this.boletim.getDados().getTipo_eleicao().setDescricao( atributo.getTextContent() );
+                            break;
+                            case "ano":
+                                int ano = Integer.valueOf(atributo.getTextContent());
+                                this.boletim.getDados().getTipo_eleicao().setAno(ano);
+                            break;
+                            default:
+                                System.out.println("Tag invalida, não adicionada ao tipo");
+                            break;
+                        }
+                    }
+            }
+            
     }
 }
 /*
