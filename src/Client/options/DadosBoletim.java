@@ -1,4 +1,5 @@
 package Client.options;
+import java.util.ArrayList;
 /**
  * @author Suporte-04
  */
@@ -9,10 +10,8 @@ public class DadosBoletim {
     private TipoEleicao tipo_eleicao;
     private DadosSecao dados_secao;
     private DadosUrna dados_urna;
-    
-    private Resultados resultados;
+    private ArrayList<Resultado> resultados;
 
-   
     public DadosBoletim(){
         this.tipo_eleicao = new TipoEleicao();
         this.dados_secao = new DadosSecao();
@@ -54,11 +53,19 @@ public class DadosBoletim {
         this.dados_urna = dados_urna;
     }
 
-    public Resultados getResultados() {
+    public ArrayList<Resultado> getResultados() {
         return resultados;
     }
 
-    public void setResultados(Resultados resultados) {
+    public Resultado getResultado(String vaga){
+        for( Resultado each : resultados ){
+            if(each.getVaga().equalsIgnoreCase(vaga))
+                return each;
+        }
+        return null;
+    }
+    
+    public void setResultados(ArrayList<Resultado> resultados) {
         this.resultados = resultados;
     }
     

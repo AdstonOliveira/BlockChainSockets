@@ -25,7 +25,8 @@
 		</urna>
 
 		<resultados>
-			<cargo votacao ="Vereador">
+			<cargo votacao ="vereador">
+				
 				<partido numero = "89">
 					<cod_verificador>3.852.989.921</cod_verificador>
 					<candidatos>
@@ -37,7 +38,7 @@
 						<votacao>
 							<nome>bcd</nome>
 							<num>89002</num>
-							<votos>10</votos>
+							<votos>15</votos>
 						</votacao>
 						<votacao>
 							<nome>efg</nome>
@@ -48,13 +49,14 @@
 					<votos_legenda>10</votos_legenda>
 					<total>40</total>
 				</partido>
+				
 				<partido numero="70">
 					<cod_verificador>8.423.989.177</cod_verificador>
 					<candidatos>
 						<votacao>
 							<nome>ABC</nome>
 							<num>70001</num>
-							<votos>10</votos>
+							<votos>140</votos>
 						</votacao>
 						<votacao>
 							<nome>bcd</nome>

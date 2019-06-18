@@ -3,12 +3,15 @@ import java.io.File;
 /**
  * @author Suporte-04
  */
-public class BoletimUrna {
+public class BoletimUrna{
     //Conteudo completo
     private File xml;
     private String hash_file;
-    
     private final DadosBoletim dados;
+    
+    
+    
+    
     
     public BoletimUrna(){
         this.dados = new DadosBoletim();
