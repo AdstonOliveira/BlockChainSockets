@@ -4,7 +4,7 @@ package Client.options;
  */
 public class DadosBoletim {
 
-    private int num_resumo;
+    private String num_resumo;
     
     private TipoEleicao tipo_eleicao;
     private DadosSecao dados_secao;
@@ -12,26 +12,21 @@ public class DadosBoletim {
     
     private Resultados resultados;
 
-    public DadosBoletim(TipoEleicao tipo_eleicao, DadosSecao dados_secao, DadosUrna dados_urna, Resultados resultados) {
-        this.tipo_eleicao = tipo_eleicao;
-        this.dados_secao = dados_secao;
-        this.dados_urna = dados_urna;
-        this.resultados = resultados;
-    }
+   
     public DadosBoletim(){
         this.tipo_eleicao = new TipoEleicao();
+        this.dados_secao = new DadosSecao();
+        this.dados_urna = new DadosUrna();
     }
+    
     public DadosBoletim(TipoEleicao tipo_eleicao){
         this.tipo_eleicao = tipo_eleicao;
     }
-    
-    
-
-    public int getNum_resumo() {
+    public String getNum_resumo() {
         return num_resumo;
     }
 
-    public void setNum_resumo(int num_resumo) {
+    public void setNum_resumo(String num_resumo) {
         this.num_resumo = num_resumo;
     }
 

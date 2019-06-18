@@ -24,11 +24,8 @@ public class TipoEleicao {
      *
      * @param id
      */
-    public boolean setId(int id) {
-        if(id > 2000)
-            this.id = id;
-        
-        return id >= 1999;
+    public void setId(int id) {
+       this.id = id;
     }
 
     public String getDescricao() {

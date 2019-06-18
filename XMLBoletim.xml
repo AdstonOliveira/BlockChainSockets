@@ -11,13 +11,13 @@
 			<zona>0001</zona>
 			<local>1139</local>
 			<secao>0004</secao>
-			<aptos_votar>0341</aptos_votar>
+			<aptos>0341</aptos>
 			<comparecimento>0178</comparecimento>
 			<faltosos>0163</faltosos>
 			<habilitados>0175</habilitados>
 		</dados_secao>
 
-		<urna id = "01763178">
+		<urna id_urna = "01763178">
 			<dt_abertura>07/09/2016</dt_abertura>
 			<hr_abertura>15:24:11</hr_abertura>
 			<dt_fechamento>07/09/2016</dt_fechamento>
