@@ -11,12 +11,14 @@ public class DadosSecao {
     private int comparecimentos;
     private int faltosos;
     private int habilitados;
+    private int local;
 
     @Override
     public String toString() {
-        return "Dados da Secao{" + "\nzona = " + zona + ", municipio = " + municipio + ", secao = " + secao 
+        return "Dados da Secao{" 
+                + "\nzona = " + zona + ", municipio = " + municipio + ", secao = " + secao 
                 + "\naptos_votar = " + aptos_votar + ", comparecimentos = " + comparecimentos 
-                + "\nfaltosos = " + faltosos + ", habilitados = " + habilitados + "\n}";
+                + "\nfaltosos = " + faltosos + ", habilitados = " + habilitados + ", local = "+ local +"\n}";
     }
 
     public int getMunicipio() {
@@ -40,11 +42,11 @@ public class DadosSecao {
     }
 
     public int getLocal() {
-        return municipio;
+        return local;
     }
 
     public void setLocal(int local) {
-        this.municipio = local;
+        this.local = local;
     }
 
     public int getSecao() {

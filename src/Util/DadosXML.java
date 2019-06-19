@@ -30,25 +30,30 @@ import org.xml.sax.SAXException;
 public class DadosXML {
     private final BoletimUrna boletim;
     
-    public DadosXML(File file) throws IOException{
-        this.boletim = this.lerArquivo(file);
-    }
-    
     public static void main(String[] args) throws IOException {
         File f = new File(".\\XMLBoletim.xml");
         DadosXML xml = new DadosXML(f);
 
-        System.out.println(xml.boletim.getDados().getDados_secao().toString());
-        for(Partido each : xml.boletim.getDados().getResultados().get(0).getPartidos()){
+        System.out.println(xml.getBoletim().getDados().getDados_secao().toString());
+        
+        for(Partido each : xml.getBoletim().getDados().getResultados().get(0).getPartidos())
             each.printPartido();
-        }
         
     }
+
+    public BoletimUrna getBoletim() {
+        return boletim;
+    }
+    
+    
+    public DadosXML(File file) throws IOException{
+        this.boletim = this.lerArquivo(file);
+    }
+    
     
     public BoletimUrna lerArquivo(File file) throws IOException{
     //Inicialização
     BoletimUrna boletim = new BoletimUrna();
-    
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -307,19 +312,7 @@ public class DadosXML {
                                     enc_calendar.set(Calendar.SECOND, Integer.valueOf(hora_e[2]) );
 
                                 boletim.getDados().getDados_urna().setDt_fechamento(enc_calendar.getTime());
-                            break;/*
-                            case "comparecimento":
-                                int comp = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(comp);
                             break;
-                            case "faltosos":
-                                int faltosos = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(faltosos);
-                            break;
-                            case "habilitados":
-                                int habil = Integer.valueOf(atributo.getTextContent());
-                                boletim.getDados().getDados_secao().setLocal(habil);
-                            break;*/
                             default:
                                 System.out.println("Tag invalida, não adicionada ao tipo: " + atributo.getTagName());
                             break;
@@ -331,9 +324,12 @@ public class DadosXML {
     
    public void dados_secao(Element c, BoletimUrna boletim){
         NodeList elementos = c.getChildNodes();
-        boletim.getDados().getDados_secao().setMunicipio(Integer.valueOf(c.getAttribute("id_municipio")));
+        boletim.getDados().getDados_secao().setMunicipio( Integer.valueOf(c.getAttribute("id_municipio")));
         
-            for (int i = 0; i < elementos.getLength(); i++) {
+        System.out.println("1: " + Integer.valueOf(c.getAttribute("id_municipio")));
+        System.out.println("2: " + boletim.getDados().getDados_secao().getMunicipio()); 
+        
+        for (int i = 0; i < elementos.getLength(); i++) {
                 Node filho = elementos.item(i);
                 
                 if(filho.getNodeType() == Node.ELEMENT_NODE){
@@ -374,6 +370,8 @@ public class DadosXML {
                         }
                     }
             }
+        System.out.println("3: " + boletim.getDados().getDados_secao().toString());
+        
     }
     
     
